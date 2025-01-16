@@ -11,12 +11,11 @@
     },
     "require-dev": {
         "laravel/breeze": "^2.3",
-            
+        "phpunit/phpunit": "^11.0.1"
     },
     "autoload": {
         "psr-4": {
             "App\\": "app/",
-            "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
         }
     },
