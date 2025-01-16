@@ -54,7 +54,7 @@
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->created_at ? $user->created_at->format('Y-m-d H:i') : 'N/A' }}</td>
                         <td>
-                            <a href="{{ route('users.edit', $user->id) }}" class="btn btn-link">Edit</a>
+                            <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning btn-sm">Edit</a>
                             <form action="{{ route('users.destroy', $user->id) }}" method="POST" style="display:inline;">
                                 @csrf
                                 @method('DELETE')
@@ -70,6 +70,7 @@
                         <td colspan="4" class="text-center">No users found.</td>
                     </tr>
                 @endforelse
+                
             </tbody>
         </table>
     </div>

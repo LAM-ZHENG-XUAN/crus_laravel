@@ -11,8 +11,30 @@
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"
-            integrity="sha384-oPu2k4s0FQKjxR3PIm0KcHuiYPXJlANB62jrpESlDvFpSyvLt0D8M/V9KuN8X" crossorigin="anonymous">
+    integrity="sha384-UG8ao2jwOWB7/oDdObZc6ItJmwUkR/PfMyt9Qs5AwX7PsnYn1CRKCTWyncPTWvaS"
+    crossorigin="anonymous"></script>
+
         </script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+            function confirmDelete(projectId) {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "This action cannot be undone!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Yes, delete it!',
+                    cancelButtonText: 'Cancel'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        document.getElementById('delete-form-' + projectId).submit();
+                    }
+                });
+            }
+        </script>
+        
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     </head>
     <style>
@@ -154,7 +176,7 @@
                 <div class="p-6 text-gray-900">
                     <a href="{{ route('projects.create') }}" class="btn btn-primary float-end">Add Project</a>
                     <div class="row" id="project-list">
-                        @foreach ($projects as $project)
+                        @foreach ($projects as $project)    
                         <div class="col-md-6 mb-4">
                             <div class="card big-card" data-id="{{ $project->id }}">
                                 <i class="drag-handle bi bi-grip-horizontal"></i>
@@ -190,14 +212,14 @@
                                     </p>
                                     <div class="d-flex justify-content-end mt-3">
                                         <a href="{{ route('projects.edit', $project->id) }}"
-                                            class="btn btn-link">Edit</a>
+                                            class="btn btn-warning">Edit</a>
                                         <button onclick="copyRow(this)" class="btn btn-info">Copy All</button>
-                                        <form action="{{ route('projects.destroy', $project->id) }}" method="POST"
-                                            style="display:inline;">
+                                        <form action="{{ route('projects.destroy', $project->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this project? This action cannot be undone.');">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger btn-delete">Delete</button>
                                         </form>
+                                        
                                     </div>
                                 </div>
 
